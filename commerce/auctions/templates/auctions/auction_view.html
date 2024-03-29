@@ -1,0 +1,57 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Listing: Gratis</h2>
+    <div class="auction-item">
+        <div class="auction-info">
+            <img src="https://st3.depositphotos.com/4285885/17922/i/450/depositphotos_179229910-stock-photo-gratis-written-text-on-green.jpg">
+            <strong>$130.400</strong>
+            <p>olestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis conubia.
+                Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas ut
+                euismod donec primis lacus. Quis rutrum nullam habitasse fusce class elementum nisi et egestas. Luctus
+                viverra scelerisque libero dolor sit aliquam sapien. Scelerisque at curae; augue mus ullamcorper
+                pretium. Habitant ante eu pellentesque sollicitudin quam erat taciti eu etiam integer ultricies. Quis
+                blandit in sit, praesent sagittis rutrum tincidunt. Egestas fringilla ante venenatis tempus. A ultrices
+                himenaeos adipiscing congue.
+            </p>
+            <h3>Details</h3>
+            <ul>
+                <li>
+                    Listed by: pepe
+                </li>
+                <li>
+                    Category: Hola
+                </li>
+            </ul>
+        </div>
+        <div class="bid-section">
+            <h3>Bids</h3>
+            <form>
+                <input type="number" placeholder="Set your bid value">
+                <input type="submit" value="Place bid">
+            </form>
+            <h5>Bids History</h5>
+            <div class="bid-section-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Bid</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>Comments</h2>
+    </div>
+
+{% endblock %}

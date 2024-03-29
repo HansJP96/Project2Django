@@ -1,3 +1,43 @@
 body {
-    padding: 10px;
+  padding: 10px;
+}
+
+.auction-box {
+  display: flex;
+  flex-direction: row;
+  padding: 4px;
+  height: 250px;
+  width: 90%;
+  border: solid 1px rgba(83, 83, 83, 0.438);
+  border-radius: 10px;
+  align-content: space-between;
+  box-shadow: 2px 20px 100px -50px rgba(71, 71, 71, 1);
+  cursor: pointer;
+}
+
+.auction-box img {
+  height: 100%;
+}
+
+.auction-box-div {
+  display: flex;
+  flex-direction: column;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.auction-box-div-title {
+  font-size: x-large;
+  font-weight: 800;
+}
+
+.auction-box-div p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.auction-box-div small {
+  color: rgba(139, 138, 138, 0.836);
 }
