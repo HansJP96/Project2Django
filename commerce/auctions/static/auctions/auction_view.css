@@ -13,8 +13,8 @@
 
 .auction-info img {
   align-self: center;
-  max-width: 60%;
-  max-height: 50%;
+  max-width: 40%;
+  max-height: 30%;
 }
 
 .auction-info strong {
@@ -32,8 +32,9 @@
 }
 
 .bid-section-table {
-  overflow: auto;
+  overflow-y: auto;
   width: 100%;
+  max-height: 250px;
   padding-right: 10px;
 }
 
@@ -58,4 +59,63 @@
   background-color: #ffffff;
   color: #000000;
   padding: 5px;
+}
+
+.comment-section {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+  gap: 15px;
+}
+
+.comment-section-post {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
+}
+
+.comment-section-post-box {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: 100%;
+  padding: 8px;
+  border: solid 1px rgba(83, 83, 83, 0.438);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.comment-section-post-box-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.comment-section-post-box-info strong {
+  font-size: large;
+}
+
+.comment-section-post-box-info small {
+  color: rgb(102, 102, 102);
+}
+
+.comment-section-post-box-response {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  margin-left: 15px;
+  gap: 10px;
+}
+
+.comment-section-form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  gap: 10px;
+}
+
+.comment-section-form input {
+  max-width: fit-content;
 }
