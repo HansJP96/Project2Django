@@ -1,11 +1,18 @@
-<div class="bid-section">
+{% load humanize %}
+
+<div id="user-bids"  class="bid-section">
     <h3>Bids</h3>
-    <form>
-        <input type="number" placeholder="Set your bid value">
+    <form hx-post="{% url 'new_bid' auction_data.id %}" hx-target="#user-bids"
+          hx-swap="outerHTML">
+        {% csrf_token %}
+        <input type="number" name="bid-value" placeholder="Set your bid value">
+        <input type="text" name="auction-seller" hidden="hidden" value="{{auction_data.seller_user.id}}">
+        <input type="number" name="auction-initial_price" hidden="hidden" value="{{auction_data.current_price}}">
         <input type="submit" value="Place bid">
     </form>
     <h5>Bids History</h5>
     <div class="bid-section-table">
+        {% if bid_data_list %}
         <table>
             <thead>
             <tr>
@@ -14,15 +21,16 @@
             </tr>
             </thead>
             <tbody>
+            {% for bid in bid_data_list %}
             <tr>
-                <td>100.000</td>
-                <td>29/01/2023</td>
+                <td>${{bid.offer_price|intcomma}}</td>
+                <td>{{bid.update_time|date:'SHORT_DATETIME_FORMAT'}}</td>
             </tr>
-            <tr>
-                <td>10.000.223</td>
-                <td>11/19/1011</td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <label class="bid-section-empty-table">No bids yet</label>
+        {% endif %}
     </div>
 </div>

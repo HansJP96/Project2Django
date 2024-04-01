@@ -1,33 +1,31 @@
 {% extends "auctions/layout.html" %}
+{% load humanize %}
 
 {% block body %}
 
-    <h2>Listing: Gratis</h2>
+    <h2>Listing: {{auction_data.title}}</h2>
     <div class="auction-item">
         <div class="auction-info">
-            <img src="https://st3.depositphotos.com/4285885/17922/i/450/depositphotos_179229910-stock-photo-gratis-written-text-on-green.jpg">
-            <strong>$130.400</strong>
-            <p>olestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis conubia.
-                Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas ut
-                euismod donec primis lacus. Quis rutrum nullam habitasse fusce class elementum nisi et egestas. Luctus
-                viverra scelerisque libero dolor sit aliquam sapien. Scelerisque at curae; augue mus ullamcorper
-                pretium. Habitant ante eu pellentesque sollicitudin quam erat taciti eu etiam integer ultricies. Quis
-                blandit in sit, praesent sagittis rutrum tincidunt. Egestas fringilla ante venenatis tempus. A ultrices
-                himenaeos adipiscing congue.
+            <img src={{auction_data.photo}}>
+            <strong>${{highest_bid.offer_price|default:auction_data.current_price|intcomma}}</strong>
+            <p>
+                {{auction_data.description}}
             </p>
             <h3>Details</h3>
             <ul>
                 <li>
-                    Listed by: pepe
+                    Listed by: {{auction_data.seller_user}}
                 </li>
                 <li>
-                    Category: Hola
+                    Category: {{auction_data.get_category_display}}
                 </li>
             </ul>
         </div>
-        {% block bid-content %}
-            {% include "auctions/bids.html" %}
-        {% endblock %}
+        {% if user_data.is_authenticated %}
+            {% block bid-content %}
+                {% include "auctions/bids.html" %}
+            {% endblock %}
+        {% endif %}
     </div>
     {% block comments-content %}
         {% include "auctions/comments.html" %}

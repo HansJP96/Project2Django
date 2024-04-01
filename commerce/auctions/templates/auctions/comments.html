@@ -13,7 +13,7 @@
                 viverra scelerisque libero dolor sit aliquam sapien.
             </p>
             <div class="comment-section-post-box-response">
-                <span style='font-size:20px;'>&#8627;</span>
+                <span style="font-size:20px; color: black;">&#8627;</span>
                 <p>
                     olestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis
                     conubia.
@@ -37,13 +37,15 @@
                 euismod donec primis lacus. Quis rutrum nullam habitasse
             </p>
             <div class="comment-section-post-box-response">
-                <span style='font-size:20px;'>&#8627;</span>
+                <span style="font-size:20px; color: black;">&#8627;</span>
                 <p>qqqqqqqqqqqqqqqqqqqqqqqqq</p>
             </div>
         </div>
     </div>
-    <form class="comment-section-form">
-        <textarea placeholder="Se supone que debo crear esto por django"></textarea>
-        <input type="submit" value="Add Comment">
-    </form>
+    {% if user_data.is_authenticated %}
+        <form class="comment-section-form">
+            <textarea placeholder="Se supone que debo crear esto por django"></textarea>
+            <input type="submit" value="Add Comment">
+        </form>
+    {% endif %}
 </div>

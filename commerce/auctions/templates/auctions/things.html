@@ -1,0 +1,54 @@
+<!--usado en index-->
+<div class="auction-box" onclick="location.href=`{% url 'auction' 1 %}`;">
+    <img src="https://st3.depositphotos.com/4285885/17922/i/450/depositphotos_179229910-stock-photo-gratis-written-text-on-green.jpg">
+    <div class="auction-box-div">
+        <label class="auction-box-div-title">Titulo</label>
+        <label>
+            <b>Price:</b>$70.0000000
+        </label>
+        <p>Molestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis conubia.
+            Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas ut
+            euismod donec primis lacus. Quis rutrum nullam habitasse fusce class elementum nisi et egestas. Luctus
+            viverra scelerisque libero dolor sit aliquam sapien. Scelerisque at curae; augue mus ullamcorper
+            pretium. Habitant ante eu pellentesque sollicitudin quam erat taciti eu etiam integer ultricies. Quis
+            blandit in sit, praesent sagittis rutrum tincidunt. Egestas fringilla ante venenatis tempus. A ultrices
+            himenaeos adipiscing congue.</p>
+        <small>fecha</small>
+    </div>
+</div>
+
+<!--usado en auactionm view-->
+{% block body %}
+
+    <h2>Listing: Gratis</h2>
+    <div class="auction-item">
+        <div class="auction-info">
+            <img src="https://st3.depositphotos.com/4285885/17922/i/450/depositphotos_179229910-stock-photo-gratis-written-text-on-green.jpg">
+            <strong>$130.400</strong>
+            <p>olestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis conubia.
+                Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas ut
+                euismod donec primis lacus. Quis rutrum nullam habitasse fusce class elementum nisi et egestas. Luctus
+                viverra scelerisque libero dolor sit aliquam sapien. Scelerisque at curae; augue mus ullamcorper
+                pretium. Habitant ante eu pellentesque sollicitudin quam erat taciti eu etiam integer ultricies. Quis
+                blandit in sit, praesent sagittis rutrum tincidunt. Egestas fringilla ante venenatis tempus. A ultrices
+                himenaeos adipiscing congue.
+            </p>
+            <h3>Details</h3>
+            <ul>
+                <li>
+                    Listed by: pepe
+                </li>
+                <li>
+                    Category: Hola
+                </li>
+            </ul>
+        </div>
+        {% block bid-content %}
+            {% include "auctions/bids.html" %}
+        {% endblock %}
+    </div>
+    {% block comments-content %}
+        {% include "auctions/comments.html" %}
+    {% endblock %}
+
+{% endblock %}

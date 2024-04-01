@@ -1,23 +1,29 @@
 {% extends "auctions/layout.html" %}
+{% load humanize %}
+{% load tz %}
 
 {% block body %}
     <h2>Active Listings</h2>
+    {% for auction in auctions_list %}
+        <div class="auction-box" onclick="location.href=`{% url 'auction' auction.id %}`;">
+            <img src={{auction.photo}}>
+            <div class="auction-box-div">
+                <label class="auction-box-div-title">{{auction.title}}</label>
+                <label>
+                    <b>Price:</b>${{auction.current_price|intcomma}}
+                </label>
+                <p>
+                    {{auction.description}}
+                </p>
+                <small>
+                    <!--{% localtime on %}-->
+                        {{auction.create_date|localtime}}
+                    <!--{% endlocaltime %}-->
 
-    <div class="auction-box" onclick="location.href=`{% url 'auction' 1 %}`;">
-        <img src="https://st3.depositphotos.com/4285885/17922/i/450/depositphotos_179229910-stock-photo-gratis-written-text-on-green.jpg">
-        <div class="auction-box-div">
-            <label class="auction-box-div-title">Titulo</label>
-            <label>
-                <b>Price:</b>$70.0000000
-            </label>
-            <p>Molestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis conubia.
-                Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas ut
-                euismod donec primis lacus. Quis rutrum nullam habitasse fusce class elementum nisi et egestas. Luctus
-                viverra scelerisque libero dolor sit aliquam sapien. Scelerisque at curae; augue mus ullamcorper
-                pretium. Habitant ante eu pellentesque sollicitudin quam erat taciti eu etiam integer ultricies. Quis
-                blandit in sit, praesent sagittis rutrum tincidunt. Egestas fringilla ante venenatis tempus. A ultrices
-                himenaeos adipiscing congue.</p>
-            <small>fecha</small>
+                </small>
+            </div>
         </div>
-    </div>
+    {% empty %}
+        <h4>No Auctions Available</h4>
+    {% endfor %}
 {% endblock %}

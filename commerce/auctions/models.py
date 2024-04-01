@@ -24,6 +24,7 @@ class Auction(models.Model):
     photo = models.CharField(max_length=256)
     category = models.IntegerField(choices=Category)
     create_date = models.DateTimeField(default=timezone.now, editable=False)
+    seller_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
 
 
 class Bid(models.Model):
@@ -32,6 +33,9 @@ class Bid(models.Model):
     bidder_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="bidder")
     offer_price = models.IntegerField()
     update_time = models.DateTimeField(default=timezone.now, editable=False)
+
+    def is_valid_bid(self, last_price):
+        return int(self.offer_price) > last_price
 
 
 class Comment(models.Model):
