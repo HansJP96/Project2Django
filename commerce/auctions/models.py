@@ -34,9 +34,6 @@ class Bid(models.Model):
     offer_price = models.IntegerField()
     update_time = models.DateTimeField(default=timezone.now, editable=False)
 
-    def is_valid_bid(self, last_price):
-        return int(self.offer_price) > last_price
-
 
 class Comment(models.Model):
     auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)

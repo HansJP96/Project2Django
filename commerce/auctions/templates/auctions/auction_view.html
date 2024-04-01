@@ -4,7 +4,7 @@
 {% block body %}
 
     <h2>Listing: {{auction_data.title}}</h2>
-    <div class="auction-item">
+    <div id="auction" class="auction-item">
         <div class="auction-info">
             <img src={{auction_data.photo}}>
             <strong>${{highest_bid.offer_price|default:auction_data.current_price|intcomma}}</strong>
