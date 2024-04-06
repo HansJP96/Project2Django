@@ -1,51 +1,30 @@
 <h2 id="comments">Comments</h2>
 <div class="comment-section">
     <div class="comment-section-post">
-        <div class="comment-section-post-box">
-            <div class="comment-section-post-box-info">
-                <strong>Juan pepe</strong>
-                <small>24/02/0212</small>
-            </div>
-            <p>
-                olestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis conubia.
-                Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas ut
-                euismod donec primis lacus. Quis rutrum nullam habitasse fusce class elementum nisi et egestas. Luctus
-                viverra scelerisque libero dolor sit aliquam sapien.
-            </p>
-            <div class="comment-section-post-box-response">
-                <span style="font-size:20px; color: black;">&#8627;</span>
+        {% for comment in auction_comments %}
+            <div class="comment-section-post-box">
+                <div class="comment-section-post-box-info">
+                    <strong>{{comment.client_user.username}}</strong>
+                    <small>{{comment.create_date|date:'SHORT_DATE_FORMAT'}}</small>
+                </div>
                 <p>
-                    olestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis
-                    conubia.
-                    Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas
-                    ut
-                    euismod donec primis lacus. Quis rutrum nullam habitasse fusce class elementum nisi et egestas.
-                    Luctus
-                    viverra scelerisque libero dolor sit aliquam sapien. Scelerisque at curae; augue mus ullamcorper
-                    pretium. Habitant
+                    {{comment.comment}}
                 </p>
+                {% if comment.response %}
+                    <div class="comment-section-post-box-response">
+                        <span style="font-size:20px; color: black;">&#8627;</span>
+                        <p>
+                            {{comment.response}}
+                        </p>
+                    </div>
+                {% endif %}
             </div>
-        </div>
-        <div class="comment-section-post-box">
-            <div class="comment-section-post-box-info">
-                <strong>Juan pepe</strong>
-                <small>24/02/1111</small>
-            </div>
-            <p>
-                olestie convallis massa purus, velit enim penatibus. Mus porttitor nisl taciti tempus primis conubia.
-                Mus nisl imperdiet mauris. Condimentum vehicula ad cubilia mattis lectus sagittis consequat. Egestas ut
-                euismod donec primis lacus. Quis rutrum nullam habitasse
-            </p>
-            <div class="comment-section-post-box-response">
-                <span style="font-size:20px; color: black;">&#8627;</span>
-                <p>qqqqqqqqqqqqqqqqqqqqqqqqq</p>
-            </div>
-        </div>
+        {% endfor %}
+        {% if user_data.is_authenticated %}
+            <form class="comment-section-form">
+                <textarea placeholder="Se supone que debo crear esto por django"></textarea>
+                <input type="submit" value="Add Comment">
+            </form>
+        {% endif %}
     </div>
-    {% if user_data.is_authenticated %}
-        <form class="comment-section-form">
-            <textarea placeholder="Se supone que debo crear esto por django"></textarea>
-            <input type="submit" value="Add Comment">
-        </form>
-    {% endif %}
 </div>

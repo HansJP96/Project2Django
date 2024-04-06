@@ -26,11 +26,19 @@
   min-width: 30%;
 }
 
+.bid-section .current-bid {
+  color: rgb(102, 102, 102);
+}
+
 .bid-section form {
   display: flex;
   flex-direction: row;
   padding-bottom: 20px;
   gap: 5px
+}
+
+.bid-errors {
+  color: rgba(255, 0, 0, 0.9);
 }
 
 .bid-section-table {
