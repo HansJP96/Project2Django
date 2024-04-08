@@ -79,9 +79,7 @@ def response_comment(request, id_comment):
     else:
         return render(request, "auctions/comments/comment_response.html", context={
             "user_data": request.user,
-            "auction_comments_list": views_helper.auction_comments_factory(id_auction=comment.auction.id,
-                                                                           comment_obj=comment,
-                                                                           form_obj=comment_response_form_data)
+            "form": comment_response_form_data
         })
     return render(request, "auctions/comments/comment_response.html", context={
         "user_data": request.user,

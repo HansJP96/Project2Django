@@ -1,6 +1,6 @@
 <div id="comments" class="comment-section">
     <div class="comment-section-post">
-        {% for comment,form in auction_comments_list %}
+        {% for comment,response_form in auction_comments_list %}
             <div class="comment-section-post-box">
                 <div class="comment-section-post-box-info">
                     <strong>{{comment.client_user.username}}</strong>
