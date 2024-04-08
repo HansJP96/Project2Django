@@ -1,0 +1,19 @@
+{% if comment.response %}
+<div class="comment-section-post-box-response">
+    <span style="font-size:20px; color: black;">&#8627;</span>
+    <p>
+        {{comment.response}}
+    </p>
+</div>
+{% elif comment.auction.seller_user == user_data %}
+<form class="comment-section-post-box-response_form"
+      hx-post="{% url 'response_comment' comment.id %}"
+      hx-target="#response-section-{{ comment.id }}"
+      hx-swap="outerHTML">
+    {% csrf_token %}
+    {% for field in form %}
+    {{field}}
+    {% endfor %}
+    <input type="submit" value="Response">
+</form>
+{% endif %}

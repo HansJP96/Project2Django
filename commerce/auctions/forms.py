@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from auctions import util
+from auctions.utils import querys
 
 
 class BidForm(forms.Form):
@@ -14,8 +14,21 @@ class BidForm(forms.Form):
         new_bid_value = cleaned_data.get("bid_value")
         id_auction = cleaned_data.get("auction")
         initial_auction_price = cleaned_data.get("auction_initial_price")
-        highest_current_bid = util.get_max_bid(id_auction)
+        highest_current_bid = querys.get_max_bid(id_auction)
         last_price = highest_current_bid.offer_price if highest_current_bid else int(initial_auction_price)
         if int(new_bid_value) <= last_price:
-            raise ValidationError("The price is lower than the highest bid")
+            raise ValidationError("The price less than or equal to the highest bid")
         return cleaned_data
+
+
+class NewCommentForm(forms.Form):
+    auction = forms.CharField(widget=forms.HiddenInput())
+    comment = forms.CharField(label=False,
+                              max_length=512,
+                              widget=forms.Textarea(attrs={'placeholder': 'Add your comment...', 'maxlength': '512'}))
+
+
+class ResponseCommentForm(forms.Form):
+    id_comment = forms.CharField(widget=forms.HiddenInput())
+    response = forms.CharField(label=False, max_length=256, widget=forms.Textarea(
+        attrs={'placeholder': 'Add your response...', 'cols': 1, 'rows': 3, 'maxlength': '256'}))

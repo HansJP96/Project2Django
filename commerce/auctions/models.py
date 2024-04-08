@@ -28,14 +28,14 @@ class Auction(models.Model):
 
 
 class Bid(models.Model):
-    auction_id = models.ForeignKey(Auction, on_delete=models.PROTECT)
-    bidder_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="bidder")
+    auction = models.ForeignKey(Auction, on_delete=models.PROTECT, related_name="auction_bids")
+    bidder_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="user_bids")
     offer_price = models.IntegerField()
     update_time = models.DateTimeField(default=timezone.now, editable=False)
 
 
 class Comment(models.Model):
-    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="auction_comments")
     client_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="client")
     comment = models.TextField(max_length=512)
     response = models.TextField(max_length=256, blank=True)

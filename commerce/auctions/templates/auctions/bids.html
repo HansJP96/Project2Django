@@ -5,7 +5,7 @@
         {% if highest_bid == bid_data_list|first %}
             <small class="current-bid" >Your bid is the current bid</small>
         {% endif %}
-    <form hx-post="{% url 'new_bid' auction_data.id %}" hx-target="#user-bids"
+    <form hx-post="{% url 'new_bid' id_auction %}" hx-target="#user-bids"
           hx-swap="outerHTML" >
         {% csrf_token %}
             {% for field in bid_form %}
@@ -14,10 +14,10 @@
         <input type="submit" value="Place bid">
     </form>
     {% for error in bid_form.non_field_errors %}
-            <ul class="bid-errors">
-                <li>{{error}}</li>
-            </ul>
-        {% endfor %}
+        <ul class="bid-errors">
+            <li>{{error}}</li>
+        </ul>
+    {% endfor %}
     <h5>My Bid History</h5>
     <div class="bid-section-table">
         {% if bid_data_list %}

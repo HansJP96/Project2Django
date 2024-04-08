@@ -1,3 +1,15 @@
+@keyframes comments-anim {
+	0% {
+		opacity: 0;
+		transform: translateY(50px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
 .auction-item {
   display: flex;
   flex-direction: row;
@@ -101,6 +113,7 @@
   border: solid 1px rgba(83, 83, 83, 0.438);
   font-size: 14px;
   margin-bottom: 10px;
+  animation: comments-anim 1s ease 0s 1 normal none;
 }
 
 .comment-section-post-box-info {
@@ -117,6 +130,18 @@
   color: rgb(102, 102, 102);
 }
 
+.comment-section-post-box-response_form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+}
+
+.comment-section-post-box-response_form input {
+  width: fit-content;
+}
+
 .comment-section-post-box-response {
   display: flex;
   flex-direction: row;
@@ -130,6 +155,7 @@
   display: flex;
   flex-direction: column;
   width: 60%;
+  height: 150px;
   gap: 10px;
 }
 

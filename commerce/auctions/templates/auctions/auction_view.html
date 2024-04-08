@@ -21,14 +21,15 @@
                 </li>
             </ul>
         </div>
-        {% if user_data.is_authenticated %}
+        {% if user_data.is_authenticated and auction_data.seller_user != user_data  %}
             {% block bid-content %}
-                {% include "auctions/bids.html" %}
+                {% include "auctions/bids.html" with id_auction=auction_data.id %}
             {% endblock %}
         {% endif %}
     </div>
     {% block comments-content %}
-        {% include "auctions/comments.html" %}
+        <h2>Comments</h2>
+        {% include "auctions/comments/comments.html" with id_auction=auction_data.id %}
     {% endblock %}
 
 {% endblock %}
