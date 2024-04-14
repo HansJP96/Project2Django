@@ -3,21 +3,21 @@
 
 {% block body %}
 
-    <h2>Listing: {{auction_data.title}}</h2>
+    <h2>Listing: {{ auction_data.title }}</h2>
     <div id="auction" class="auction-item">
         <div class="auction-info">
             <img src={{auction_data.photo}}>
-            <strong>${{highest_bid.offer_price|default:auction_data.current_price|intcomma}}</strong>
+            <strong>${{ highest_bid.offer_price|default:auction_data.current_price|intcomma }}</strong>
             <p>
-                {{auction_data.description}}
+                {{ auction_data.description }}
             </p>
             <h3>Details</h3>
             <ul>
                 <li>
-                    Listed by: {{auction_data.seller_user}}
+                    Listed by: {{ auction_data.seller_user }}
                 </li>
                 <li>
-                    Category: {{auction_data.get_category_display}}
+                    Category: {{ auction_data.get_category_display }}
                 </li>
             </ul>
         </div>

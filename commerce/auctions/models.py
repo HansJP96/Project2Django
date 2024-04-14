@@ -23,8 +23,8 @@ class Auction(models.Model):
     current_price = models.IntegerField()
     photo = models.CharField(max_length=256)
     category = models.IntegerField(choices=Category)
-    create_date = models.DateTimeField(default=timezone.now, editable=False)
     seller_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
+    create_date = models.DateTimeField(default=timezone.now, editable=False)
 
 
 class Bid(models.Model):

@@ -121,6 +121,10 @@ SHORT_DATE_FORMAT = 'd-m-Y'
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'auctions/static/auctions'),
+]
+
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LOGOUT_REDIRECT_URL = '/'

@@ -2,7 +2,7 @@
     <div class="comment-section-post-box-response">
         <span style="font-size:20px; color: black;">&#8627;</span>
         <p>
-            {{comment.response}}
+            {{ comment.response }}
         </p>
     </div>
 {% elif comment.auction.seller_user == user_data %}
@@ -12,7 +12,7 @@
           hx-swap="outerHTML">
         {% csrf_token %}
         {% for field in response_form %}
-            {{field}}
+            {{ field }}
         {% endfor %}
         <input type="submit" value="Response">
     </form>

@@ -3,11 +3,11 @@
         {% for comment,response_form in auction_comments_list %}
             <div class="comment-section-post-box">
                 <div class="comment-section-post-box-info">
-                    <strong>{{comment.client_user.username}}</strong>
-                    <small>{{comment.create_date|date:'SHORT_DATE_FORMAT'}}</small>
+                    <strong>{{ comment.client_user.username }}</strong>
+                    <small>{{ comment.create_date|date:'SHORT_DATE_FORMAT' }}</small>
                 </div>
                 <p>
-                    {{comment.comment}}
+                    {{ comment.comment }}
                 </p>
                 <div id="response-section-{{ comment.id }}">
                     {% include "auctions/comments/comment_response.html" %}
@@ -24,7 +24,7 @@
               hx-swap="outerHTML">
             {% csrf_token %}
             {% for field in new_comment_form %}
-                {{field}}
+                {{ field }}
             {% endfor %}
             <input type="submit" value="Add Comment">
         </form>

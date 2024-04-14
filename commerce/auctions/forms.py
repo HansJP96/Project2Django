@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
+from auctions.models import Auction
 from auctions.utils import querys
 
 
@@ -32,3 +33,15 @@ class ResponseCommentForm(forms.Form):
     id_comment = forms.CharField(widget=forms.HiddenInput())
     response = forms.CharField(label=False, max_length=256, widget=forms.Textarea(
         attrs={'placeholder': 'Add your response...', 'cols': 1, 'rows': 3, 'maxlength': '256'}))
+
+
+class NewAuctionListingForm(forms.ModelForm):
+    title = forms.CharField(max_length=32, widget=forms.TextInput)
+    description = forms.CharField(max_length=256, widget=forms.Textarea(
+        attrs={'placeholder': 'Add your description...', 'cols': 100, 'rows': 5, 'maxlength': '256'}))
+    photo = forms.CharField(max_length=256, label="Photo link", widget=forms.TextInput)
+    seller_user = forms.ChoiceField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = Auction
+        fields = ["title", "description", "current_price", "photo", "category", "seller_user"]

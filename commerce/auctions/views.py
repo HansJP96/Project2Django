@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from auctions.context import AuctionContext
-from auctions.forms import BidForm, NewCommentForm, ResponseCommentForm
+from auctions.context import AuctionContext, BidContext, CommentContext, ResponseCommentContext
+from auctions.forms import BidForm, NewCommentForm, ResponseCommentForm, NewAuctionListingForm
 from auctions.models import Auction, Bid, Comment
 from auctions.utils import querys, views_helper
 
@@ -18,22 +18,23 @@ def index(request):
 
 
 def auction(request, id_auction):
-    requested_auction = Auction.objects.get(pk=id_auction)
-    context = AuctionContext()
-    context.user_data = request.user
-    context.auction_data = requested_auction
+    auction_context = AuctionContext()
+    auction_context.user_data = request.user
+    auction_context.auction_data = Auction.objects.get(pk=id_auction)
     is_user_authenticated = request.user.is_authenticated
     if is_user_authenticated:
-        context.bid_data_list = querys.get_user_bids_made(id_auction=id_auction, bidder_user=request.user.id)
-    context.highest_bid = querys.get_max_bid(id_auction)
-    context.bid_form = BidForm(
-        initial={"auction": id_auction, "auction_initial_price": requested_auction.current_price})
-    context.new_comment_form = NewCommentForm(initial={"auction": id_auction})
-    context.auction_comments_list = views_helper.auction_comments_factory(id_auction=id_auction)
-    return render(request, "auctions/auction_view.html", context=vars(context))
+        auction_context.bid_data_list = querys.get_user_bids_made(id_auction=id_auction, bidder_user=request.user.id)
+    auction_context.highest_bid = querys.get_max_bid(id_auction)
+    auction_context.bid_form = BidForm(
+        initial={"auction": id_auction, "auction_initial_price": auction_context.auction_data.current_price})
+    auction_context.new_comment_form = NewCommentForm(initial={"auction": id_auction})
+    auction_context.auction_comments_list = views_helper.auction_comments_factory(id_auction=id_auction)
+    return render(request, "auctions/auction_view.html", context=vars(auction_context))
 
 
 def new_bid(request, id_auction):
+    bid_context = BidContext()
+    bid_context.id_auction = id_auction
     bid_form_data = BidForm(request.POST)
     if bid_form_data.is_valid():
         valid_bid_data = bid_form_data.cleaned_data
@@ -43,15 +44,15 @@ def new_bid(request, id_auction):
             offer_price=valid_bid_data.get("bid_value")
         )
         bid_form_data = BidForm(initial={**request.POST.dict(), "bid_value": None})
-    return render(request, "auctions/bids.html", context={
-        "id_auction": id_auction,
-        "highest_bid": querys.get_max_bid(id_auction),
-        "bid_data_list": querys.get_user_bids_made(id_auction=id_auction, bidder_user=request.user.id),
-        "bid_form": bid_form_data
-    })
+    bid_context.highest_bid = querys.get_max_bid(id_auction)
+    bid_context.bid_data_list = querys.get_user_bids_made(id_auction=id_auction, bidder_user=request.user.id)
+    bid_context.bid_form = bid_form_data
+    return render(request, "auctions/bids.html", context=vars(bid_context))
 
 
 def new_comment(request, id_auction):
+    comment_context = CommentContext()
+    comment_context.id_auction = id_auction
     new_comment_form_data = NewCommentForm(request.POST)
     if new_comment_form_data.is_valid():
         valid_comment_data = new_comment_form_data.cleaned_data
@@ -61,27 +62,27 @@ def new_comment(request, id_auction):
             comment=valid_comment_data.get("comment")
         )
         new_comment_form_data = NewCommentForm(initial={**request.POST.dict(), "comment": None})
-    return render(request, "auctions/comments/comments.html", context={
-        "id_auction": id_auction,
-        "user_data": request.user,
-        "auction_comments_list": views_helper.auction_comments_factory(id_auction=id_auction),
-        "new_comment_form": new_comment_form_data
-    })
+    comment_context.user_data = request.user
+    comment_context.auction_comments_list = views_helper.auction_comments_factory(id_auction=id_auction)
+    comment_context.new_comment_form = new_comment_form_data
+    return render(request, "auctions/comments/comments.html", context=vars(comment_context))
 
 
 def response_comment(request, id_comment):
+    response_context = ResponseCommentContext()
+    response_context.user_data = request.user
     comment_response_form_data = ResponseCommentForm(request.POST)
     comment = Comment.objects.get(pk=id_comment)
     if comment_response_form_data.is_valid():
         valid_comment_data = comment_response_form_data.cleaned_data
         comment.response = valid_comment_data.get("response")
         comment.save()
+        response_context.comment = comment
     else:
-        return render(request, "auctions/comments/comment_response.html", context={
-            "user_data": request.user,
-            "form": comment_response_form_data
-        })
-    return render(request, "auctions/comments/comment_response.html", context={
-        "user_data": request.user,
-        "comment": comment
-    })
+        response_context.response_form = comment_response_form_data
+    return render(request, "auctions/comments/comment_response.html", context=vars(response_context))
+
+
+def create_auction_listing(request):
+    auction_listing_form = NewAuctionListingForm()
+    return render(request, "auctions/new_listing.html", context={"form": auction_listing_form})
