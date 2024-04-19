@@ -84,5 +84,24 @@ def response_comment(request, id_comment):
 
 
 def create_auction_listing(request):
-    auction_listing_form = NewAuctionListingForm()
-    return render(request, "auctions/new_listing.html", context={"form": auction_listing_form})
+    is_auction_created = False
+    if request.method == "POST":
+        new_auction_form = NewAuctionListingForm({**request.POST.dict(), "seller_user_id": request.user.id})
+        if new_auction_form.is_valid():
+            valid_new_auction = new_auction_form.cleaned_data
+            Auction.objects.create(
+                title=valid_new_auction.get("title"),
+                description=valid_new_auction.get("description"),
+                current_price=valid_new_auction.get("current_price"),
+                photo=valid_new_auction.get("photo"),
+                category=valid_new_auction.get("category"),
+                seller_user_id=valid_new_auction.get("seller_user_id")
+            )
+            is_auction_created = True
+        else:
+            print(new_auction_form.errors)
+            print(new_auction_form.non_field_errors())
+            return render(request, "auctions/new_listing.html",
+                          context={"form": new_auction_form, "is_created": is_auction_created})
+    return render(request, "auctions/new_listing.html",
+                  context={"form": NewAuctionListingForm(), "is_created": is_auction_created})

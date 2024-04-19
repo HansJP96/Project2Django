@@ -3,24 +3,26 @@
 {% load tz %}
 
 {% block body %}
+
     <h2>Active Listings</h2>
     {% for auction in auctions_list %}
         <div class="auction-box" onclick="location.href=`{% url 'auction' auction.id %}`;">
             <img src={{auction.photo}}>
             <div class="auction-box-div">
-                <label class="auction-box-div-title">{{auction.title}}</label>
+                <label class="auction-box-div-title">{{ auction.title }}</label>
                 <label>
-                    <b>Price:</b>${{auction.current_price|intcomma}}
+                    <b>Price:</b>${{ auction.current_price|intcomma }}
                 </label>
                 <p>
-                    {{auction.description}}
+                    {{ auction.description }}
                 </p>
                 <small>
-                        {{auction.create_date|localtime}}
+                        {{ auction.create_date|localtime }}
                 </small>
             </div>
         </div>
     {% empty %}
         <h4>No Auctions Available</h4>
     {% endfor %}
+
 {% endblock %}

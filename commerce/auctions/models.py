@@ -6,6 +6,7 @@ from users.models import User
 
 
 class Category(models.IntegerChoices):
+    UNCATEGORIZED = 1001, gettext_lazy("Uncategorized")
     FASHION = 0, gettext_lazy("Fashion")
     TOYS = 1, gettext_lazy("Toys")
     HOME_GARDEN = 2, gettext_lazy("Home & Garden")
@@ -14,15 +15,13 @@ class Category(models.IntegerChoices):
     COMPUTERS_TABLETS = 5, gettext_lazy("Computers/Tablets")
     VIDEOGAMES = 6, gettext_lazy("Video Games & Consoles")
 
-    __empty__ = gettext_lazy("uncategorized")
-
 
 class Auction(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=512)
     current_price = models.IntegerField()
-    photo = models.CharField(max_length=512)
-    category = models.IntegerField(choices=Category)
+    photo = models.CharField(max_length=512, blank=True)
+    category = models.IntegerField(choices=Category, blank=True, default=Category.UNCATEGORIZED)
     seller_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
     create_date = models.DateTimeField(default=timezone.now, editable=False)
 

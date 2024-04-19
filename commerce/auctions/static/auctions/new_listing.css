@@ -10,6 +10,10 @@
   grid-template-columns: 0.3fr 2fr;
 }
 
+.new-listing-form input[type=submit] {
+  width: fit-content;
+}
+
 .new-listing-form div input[type=number] {
   width: 20%;
 }

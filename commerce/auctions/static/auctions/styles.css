@@ -13,6 +13,7 @@ body {
   box-shadow: 2px 20px 80px -50px rgba(71, 71, 71, 1);
   cursor: pointer;
   margin-bottom: 20px;
+  margin-left: 3%
 }
 
 .auction-box img {

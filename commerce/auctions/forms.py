@@ -39,9 +39,9 @@ class NewAuctionListingForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput)
     description = forms.CharField(max_length=256, widget=forms.Textarea(
         attrs={'placeholder': 'Add your description...', 'cols': 100, 'rows': 5, 'maxlength': '512'}))
-    photo = forms.CharField(label="Photo link", widget=forms.TextInput)
-    seller_user = forms.ChoiceField(widget=forms.HiddenInput())
+    photo = forms.CharField(label="Photo link", required=False, widget=forms.TextInput)
+    seller_user_id = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Auction
-        fields = ["title", "description", "current_price", "photo", "category", "seller_user"]
+        fields = ["title", "description", "current_price", "photo", "category", "seller_user_id"]

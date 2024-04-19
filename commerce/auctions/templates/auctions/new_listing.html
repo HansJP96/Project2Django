@@ -1,8 +1,24 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
+
+{% block html_head %}
+    {{ block.super }}
+    <link href="{% static 'auctions/new_listing.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-    <h2>Create new listing</h2>
-    <form class="new-listing-form" action="">
+
+    <h2>Create new auction</h2>
+    <form class="new-listing-form" action="{% url 'create_listing' %}" method="post">
+        {% csrf_token %}
         {{ form }}
+        <input type="submit" value="Create auction">
     </form>
+
+    {% if is_created %}
+        <br>
+        <h5>Your auction was successfully created !!!</h5>
+    {% endif %}
+
 {% endblock %}
