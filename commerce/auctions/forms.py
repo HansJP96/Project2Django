@@ -36,10 +36,10 @@ class ResponseCommentForm(forms.Form):
 
 
 class NewAuctionListingForm(forms.ModelForm):
-    title = forms.CharField(max_length=32, widget=forms.TextInput)
+    title = forms.CharField(max_length=100, widget=forms.TextInput)
     description = forms.CharField(max_length=256, widget=forms.Textarea(
-        attrs={'placeholder': 'Add your description...', 'cols': 100, 'rows': 5, 'maxlength': '256'}))
-    photo = forms.CharField(max_length=256, label="Photo link", widget=forms.TextInput)
+        attrs={'placeholder': 'Add your description...', 'cols': 100, 'rows': 5, 'maxlength': '512'}))
+    photo = forms.CharField(label="Photo link", widget=forms.TextInput)
     seller_user = forms.ChoiceField(widget=forms.HiddenInput())
 
     class Meta:

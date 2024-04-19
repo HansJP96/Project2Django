@@ -18,10 +18,10 @@ class Category(models.IntegerChoices):
 
 
 class Auction(models.Model):
-    title = models.CharField(max_length=32)
-    description = models.CharField(max_length=256)
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=512)
     current_price = models.IntegerField()
-    photo = models.CharField(max_length=256)
+    photo = models.CharField(max_length=512)
     category = models.IntegerField(choices=Category)
     seller_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
     create_date = models.DateTimeField(default=timezone.now, editable=False)

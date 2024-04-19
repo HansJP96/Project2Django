@@ -1,8 +1,19 @@
-.new-listing-form div {
+.new-listing-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  color: blue;
-  border: 10px;
+  width: 60%;
+  gap: 10px;
 }
-s
+
+.new-listing-form div {
+  display: grid;
+  grid-template-columns: 0.3fr 2fr;
+}
+
+.new-listing-form div input[type=number] {
+  width: 20%;
+}
+
+.new-listing-form div select {
+  width: max-content;
+}
