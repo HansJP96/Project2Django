@@ -1,0 +1,14 @@
+<small id="watchlist-button-container"
+       hx-get="{% url 'watchlist_update' %}"
+       hx-trigger="htmx:afterSettle"
+       hx-target="#total-watchlist"
+       hx-swap="outerHTML">
+    <button class="watchlist-button {% if auction_in_watchlist %}remove{% else %}add{% endif %}"
+            hx-post="{% url 'watchlist_action' auction_data.id auction_in_watchlist %}"
+            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+            hx-trigger="click"
+            hx-target="#watchlist-button-container"
+            hx-swap="outerHTML">
+        Watchlist
+    </button>
+</small>

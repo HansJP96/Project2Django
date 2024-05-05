@@ -1,13 +1,28 @@
 @keyframes comments-anim {
-	0% {
-		opacity: 0;
-		transform: translateY(50px);
-	}
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
 
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.remove {
+  background-color: red;
+}
+
+.add {
+  background-color: green;
+}
+
+.auction-reference{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
 }
 
 .auction-item {
@@ -20,6 +35,7 @@
 .auction-info {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .auction-info img {
@@ -46,7 +62,7 @@
   display: flex;
   flex-direction: row;
   padding-bottom: 20px;
-  gap: 5px
+  gap: 5px;
 }
 
 .bid-errors {
@@ -161,4 +177,19 @@
 
 .comment-section-form input {
   max-width: fit-content;
+}
+
+.watchlist-button {
+  color: white;
+  font-weight: bold;
+  border-width: 0px;
+}
+
+
+.close-auction {
+  background-color: red;
+  height: fit-content;
+  color: aliceblue;
+  text-decoration: underline;
+  border-color: black;
 }

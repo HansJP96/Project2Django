@@ -17,7 +17,7 @@
             <h3>No comments yet</h3>
         {% endfor %}
     </div>
-    {% if user_data.is_authenticated and auction_data.seller_user != user_data %}
+    {% if user.is_authenticated and auction_data.seller_user != user %}
         <form class="comment-section-form"
               hx-post="{% url 'new_comment' id_auction %}"
               hx-target="#comments"

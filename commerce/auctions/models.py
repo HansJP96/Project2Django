@@ -1,8 +1,7 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy
-
-from users.models import User
 
 
 class Category(models.IntegerChoices):
@@ -22,20 +21,21 @@ class Auction(models.Model):
     current_price = models.IntegerField()
     photo = models.CharField(max_length=512, blank=True)
     category = models.IntegerField(choices=Category, blank=True, default=Category.UNCATEGORIZED)
-    seller_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
+    seller_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="creator")
+    is_closed = models.BooleanField(default=False)
     create_date = models.DateTimeField(default=timezone.now, editable=False)
 
 
 class Bid(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.PROTECT, related_name="auction_bids")
-    bidder_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="user_bids")
+    bidder_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, related_name="user_bids")
     offer_price = models.IntegerField()
     update_time = models.DateTimeField(default=timezone.now, editable=False)
 
 
 class Comment(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="auction_comments")
-    client_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="client")
+    client_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, related_name="client")
     comment = models.TextField(max_length=512)
     response = models.TextField(max_length=256, blank=True)
     create_date = models.DateTimeField(auto_now_add=True)

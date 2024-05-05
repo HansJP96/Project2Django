@@ -3,33 +3,55 @@
 
 {% block body %}
 
-    <h2>Listing: {{ auction_data.title }}</h2>
-    <div id="auction" class="auction-item">
-        <div class="auction-info">
-            <img src={{auction_data.photo}}>
-            <strong>${{ highest_bid.offer_price|default:auction_data.current_price|intcomma }}</strong>
-            <p>
-                {{ auction_data.description }}
-            </p>
-            <h3>Details</h3>
-            <ul>
-                <li>
-                    Listed by: {{ auction_data.seller_user }}
-                </li>
-                <li>
-                    Category: {{ auction_data.get_category_display }}
-                </li>
-            </ul>
-        </div>
-        {% if user_data.is_authenticated and auction_data.seller_user != user_data  %}
-            {% block bid-content %}
-                {% include "auctions/bids.html" with id_auction=auction_data.id %}
-            {% endblock %}
+    <div class="auction-reference">
+        <h2>Listing: {{ auction_data.title }}</h2>
+        {% if user.is_authenticated and auction_data.seller_user == user and auction_data.is_closed is False %}
+            <button class="close-auction" onclick="location.href='{% url 'close_auction' auction_data.id %}'">Close Auction</button>
         {% endif %}
     </div>
-    {% block comments-content %}
+    {% if user.is_authenticated %}
+        {% include "auctions/partial/watchlist_button.html" %}
+    {% endif %}
+    {% if auction_data.is_closed is False %}
+        <div id="auction" class="auction-item">
+            <div class="auction-info">
+                <img alt="Auction Image" src={{auction_data.photo|default:"/static/img/No_Image_Available.jpg"}}>
+                {% include "auctions/partial/current_price.html" %}
+                <p>
+                    {{ auction_data.description }}
+                </p>
+                <h3>Details</h3>
+                <ul>
+                    <li>
+                        Listed by: {{ auction_data.seller_user }}
+                    </li>
+                    <li>
+                        Category: {{ auction_data.get_category_display }}
+                    </li>
+                </ul>
+            </div>
+            {% if user.is_authenticated %}
+                {% include "auctions/bids.html" %}
+            {% endif %}
+        </div>
         <h2>Comments</h2>
         {% include "auctions/comments/comments.html" with id_auction=auction_data.id %}
-    {% endblock %}
-
+    {% else %}
+        <h1>The Auction has finished</h1>
+        {% if auction_data.seller_user == user or highest_bid.bidder_user %}
+            <h2>The user
+                <i>
+                    <b>{{ highest_bid.bidder_user }}</b>
+                </i>
+                has won the Auction
+            </h2>
+        {% elif highest_bid.bidder_user == user %}
+            <h2>
+                <i>
+                    <b>{{highest_bid.bidder_user}}</b>
+                </i>
+                , you are the winner of the auction, enjoy your new acquisition !!!
+            </h2>
+        {% endif %}
+    {% endif %}
 {% endblock %}

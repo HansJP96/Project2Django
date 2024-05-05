@@ -12,7 +12,7 @@
     <h2>Create new auction</h2>
     <form class="new-listing-form" action="{% url 'create_listing' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ new_auction_form }}
         <input type="submit" value="Create auction">
     </form>
 

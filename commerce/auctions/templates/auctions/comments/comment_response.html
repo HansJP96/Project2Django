@@ -5,7 +5,7 @@
             {{ comment.response }}
         </p>
     </div>
-{% elif comment.auction.seller_user == user_data %}
+{% elif comment.auction.seller_user == user %}
     <form class="comment-section-post-box-response_form"
           hx-post="{% url 'response_comment' comment.id %}"
           hx-target="#response-section-{{ comment.id }}"

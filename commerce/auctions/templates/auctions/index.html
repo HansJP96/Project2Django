@@ -1,28 +1,41 @@
 {% extends "auctions/layout.html" %}
 {% load humanize %}
-{% load tz %}
 
 {% block body %}
 
     <h2>Active Listings</h2>
     {% for auction in auctions_list %}
-        <div class="auction-box" onclick="location.href=`{% url 'auction' auction.id %}`;">
-            <img src={{auction.photo}}>
-            <div class="auction-box-div">
-                <label class="auction-box-div-title">{{ auction.title }}</label>
-                <label>
-                    <b>Price:</b>${{ auction.current_price|intcomma }}
-                </label>
-                <p>
-                    {{ auction.description }}
-                </p>
-                <small>
-                        {{ auction.create_date|localtime }}
-                </small>
+        {% if auction.is_closed is False or request.resolver_match.url_name == 'view_watchlist' %}
+            <div class="auction-box">
+                <div class="auction-box-img">
+                    <img class="auction-box-img" alt="Auction Image"
+                         src={{auction.photo|default:"/static/img/No_Image_Available.jpg"}}>
+                </div>
+                <div class="auction-box-div">
+                    <label class="auction-box-div-title"
+                           onclick="location.href=`{% url 'auction' auction.id %}`;">
+                        {{ auction.title }}
+                    </label>
+                    <label>
+                        <b>Price:</b>${{ auction.current_price|intcomma }}
+                    </label>
+                    <p>
+                        {{ auction.description }}
+                    </p>
+                    <small>
+                        {{ auction.create_date }}
+                    </small>
+                </div>
             </div>
-        </div>
+        {% endif %}
     {% empty %}
-        <h4>No Auctions Available</h4>
+        {% if request.resolver_match.url_name == 'view_watchlist' %}
+            <h4>No Auctions added to watchlist yet</h4>
+        {% elif request.resolver_match.url_name == 'category_auction' %}
+            <h4>No Auctions listed for {{ category }} category</h4>
+        {% else %}
+            <h4>No Auctions Available</h4>
+        {% endif %}
     {% endfor %}
 
 {% endblock %}

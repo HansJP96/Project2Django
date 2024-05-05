@@ -1,44 +1,51 @@
 {% load humanize %}
 
-<div id="user-bids"  class="bid-section">
-    <h3>Bids</h3>
-        {% if highest_bid == bid_data_list|first %}
-            <small class="current-bid" >Your bid is the current bid</small>
-        {% endif %}
-    <form hx-post="{% url 'new_bid' id_auction %}" hx-target="#user-bids"
-          hx-swap="outerHTML" >
-        {% csrf_token %}
-            {% for field in bid_form %}
-                {{ field }}
+<div id="user-bids" class="bid-section"
+     hx-get="{% url 'current_price' auction_data.id %}"
+     hx-trigger="htmx:afterSettle"
+     hx-target="#current_price"
+     hx-swap="outerHTML">
+        <h3>Bids</h3>
+        {% if auction_data.seller_user != user %}
+            {% if highest_bid == bid_data_list|first %}
+                <small class="current-bid" >Your bid is the current bid</small>
+            {% endif %}
+            <form hx-post="{% url 'new_bid' auction_data.id %}"
+                  hx-target="#user-bids"
+                  hx-swap="outerHTML" >
+                {% csrf_token %}
+                    {% for field in bid_form %}
+                        {{ field }}
+                    {% endfor %}
+                <input type="submit" value="Place bid">
+            </form>
+            {% for error in bid_form.non_field_errors %}
+                <ul class="bid-errors">
+                    <li>{{ error }}</li>
+                </ul>
             {% endfor %}
-        <input type="submit" value="Place bid">
-    </form>
-    {% for error in bid_form.non_field_errors %}
-        <ul class="bid-errors">
-            <li>{{ error }}</li>
-        </ul>
-    {% endfor %}
-    <h5>My Bid History</h5>
-    <div class="bid-section-table">
-        {% if bid_data_list %}
-        <table>
-            <thead>
-            <tr>
-                <th>Bid</th>
-                <th>Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for bid in bid_data_list %}
-            <tr>
-                <td>${{ bid.offer_price|intcomma }}</td>
-                <td>{{ bid.update_time|date:'SHORT_DATETIME_FORMAT' }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-            <label class="bid-section-empty-table">No bids yet</label>
+        <h5>My Bid History</h5>
         {% endif %}
-    </div>
+        <div class="bid-section-table">
+            {% if bid_data_list %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Bid</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for bid in bid_data_list %}
+                        <tr>
+                            <td>${{ bid.offer_price|intcomma }}</td>
+                            <td>{{ bid.update_time|date:'SHORT_DATETIME_FORMAT' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <label class="bid-section-empty-table">No bids yet</label>
+            {% endif %}
+        </div>
 </div>

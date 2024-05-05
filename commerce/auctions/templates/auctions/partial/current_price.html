@@ -1,0 +1,3 @@
+{% load humanize %}
+
+<strong id="current_price">${{ highest_bid.offer_price|default:auction_data.current_price|intcomma }}</strong>
