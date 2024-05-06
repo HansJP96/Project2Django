@@ -38,7 +38,7 @@
         {% include "auctions/comments/comments.html" with id_auction=auction_data.id %}
     {% else %}
         <h1>The Auction has finished</h1>
-        {% if auction_data.seller_user == user or highest_bid.bidder_user %}
+        {% if auction_data.seller_user == user %}
             <h2>The user
                 <i>
                     <b>{{ highest_bid.bidder_user }}</b>
@@ -49,8 +49,7 @@
             <h2>
                 <i>
                     <b>{{highest_bid.bidder_user}}</b>
-                </i>
-                , you are the winner of the auction, enjoy your new acquisition !!!
+                </i>, you are the winner of the auction, enjoy your new acquisition !!!
             </h2>
         {% endif %}
     {% endif %}
